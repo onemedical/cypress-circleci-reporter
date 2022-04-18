@@ -14,6 +14,14 @@ function formatDate(date: Date) {
   return date.toISOString().slice(0, -5);
 }
 
+function testInspectMock() {
+  return JSON.stringify({
+    invocationDetails: {
+      line: 10,
+    },
+  });
+}
+
 describe('reporter', () => {
   beforeEach(() => {
     fs.rmdirSync(`./test_results/cypress`, { recursive: true });
@@ -29,18 +37,23 @@ describe('reporter', () => {
 
     const test1 = new Test('test1');
     test1.duration = 1200;
+    test1.inspect = testInspectMock;
 
     const test2 = new Test('test2');
     test2.duration = 2500;
+    test2.inspect = testInspectMock;
 
     const test3 = new Test('test3');
     test3.duration = 3500;
+    test3.inspect = testInspectMock;
 
     const test4 = new Test('test4');
     test4.duration = 1500;
+    test4.inspect = testInspectMock;
 
     const test5 = new Test('test5');
     test5.duration = 1200;
+    test5.inspect = testInspectMock;
 
     const nestedSuite = new Suite('nested');
     nestedSuite.addTest(test5);
@@ -92,18 +105,18 @@ describe('reporter', () => {
     const expectedXML = `
       <?xml version="1.0" encoding="UTF-8"?>
       <testsuite name="cypress" timestamp="${startDateISO}" time="${testRunDurationFormatted}" tests="5" failures="2" skipped="1">
-        <testcase name="${test1.title}" file="${testFile}" time="${test1DurationFormatted}" classname="root"/>
-        <testcase name="${test2.title}" file="${testFile}" time="${test2DurationFormatted}" classname="root">
+        <testcase name="${test1.title}" file="${testFile}" time="${test1DurationFormatted}" classname="root" line_number="10"/>
+        <testcase name="${test2.title}" file="${testFile}" time="${test2DurationFormatted}" classname="root" line_number="10">
           <failure message="some test message" type="TestError">
             <![CDATA[some test message]]>
           </failure>
         </testcase>
-        <testcase name="${test3.title}" file="${testFile}" time="${test3DurationFormatted}" classname="root">
+        <testcase name="${test3.title}" file="${testFile}" time="${test3DurationFormatted}" classname="root" line_number="10">
           <failure message="" type="">
             <![CDATA[some test stack]]>
           </failure>
         </testcase>
-        <testcase name="${test5.title}" file="${testFile}" time="${test5DurationFormatted}" classname="root.nested"/>
+        <testcase name="${test5.title}" file="${testFile}" time="${test5DurationFormatted}" classname="root.nested" line_number="10"/>
       </testsuite>`;
 
     expect(actualXML).toEqualXML(expectedXML);
@@ -119,6 +132,7 @@ describe('reporter', () => {
 
     const test1 = new Test('test1');
     test1.duration = 1200;
+    test1.inspect = testInspectMock;
 
     const suite = new Suite('root');
     suite.root = true;
@@ -151,7 +165,7 @@ describe('reporter', () => {
     const expectedXML = `
       <?xml version="1.0" encoding="UTF-8"?>
       <testsuite name="cypress" timestamp="${startDateISO}" time="${testRunDurationFormatted}" tests="1" failures="0" skipped="0">
-        <testcase name="${test1.title}" file="spec/${testFile}" time="${test1DurationFormatted}" classname="root"/>
+        <testcase name="${test1.title}" file="spec/${testFile}" time="${test1DurationFormatted}" classname="root" line_number="10"/>
       </testsuite>`;
 
     expect(actualXML).toEqualXML(expectedXML);
