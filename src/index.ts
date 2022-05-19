@@ -123,6 +123,7 @@ class CypressCircleCIReporter extends Mocha.reporters.Base {
           ? 0
           : (test.duration / 1000).toFixed(4),
       classname: stripAnsi(getClassname(test)),
+      line_number: JSON.parse(test.inspect()).invocationDetails.line,
     };
   };
 }
