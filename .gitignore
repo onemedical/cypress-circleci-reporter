@@ -110,3 +110,6 @@ test_results
 
 cypress/screenshots
 cypress/videos
+
+# JetBrains IDE project metadata folder
+.idea
