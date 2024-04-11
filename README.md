@@ -12,6 +12,12 @@ Cypress test reporter for CircleCI based on [mocha-junit-reporter](https://githu
 
 ## Installation
 
+Include a `.npmrc` within your project and add Github's NPM registry. You can find the `$ONEMEDICAL_NPM_TOKEN` in 1Password.
+```
+@onemedical:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${ONEMEDICAL_NPM_TOKEN}
+```
+
 ```shell
 $ npm install @onemedical/cypress-circleci-reporter mocha --save-dev
 ```
