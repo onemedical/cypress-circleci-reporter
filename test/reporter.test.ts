@@ -24,7 +24,7 @@ function testInspectMock() {
 
 describe('reporter', () => {
   beforeEach(() => {
-    fs.rmdirSync(`./test_results/cypress`, { recursive: true });
+    fs.rm(`./test_results/cypress`, { recursive: true }, () => {});
   });
 
   it('creates proper xml for test run', () => {
