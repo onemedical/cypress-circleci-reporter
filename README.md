@@ -19,11 +19,11 @@ Include a `.npmrc` within your project and add Github's NPM registry. You can fi
 ```
 
 ```shell
-$ npm install @onemedical/cypress-circleci-reporter mocha --save-dev
+$ npm install @onemedical/cypress-circleci-reporter --save-dev
 ```
 
 ```shell
-$ yarn add cypress-circleci-reporter mocha --dev
+$ yarn add cypress-circleci-reporter --dev
 ```
 
 ## Usage
